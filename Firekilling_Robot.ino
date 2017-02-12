@@ -32,48 +32,49 @@ void loop() {
   delay(100);
   distance = sonar.ping_cm();
   distance1 = sonar1.ping_cm();
-  //Serial.println(c1);   //Printing Change in Distance
+  Serial.println(c1);   //Printing Change in Distance
   left.write(180);      //go straight in the beginning
   right.write(0);
   c1=distance1-pd1;
   pd1=distance1;
 
-  right();  //Turning right (around edge)
+  Right();  //Turning right (around edge)
   
   //Corrections.
-  lcor() //correction to the left
+  lcor() ;//correction to the left
  
-  rcor()//correction to the right
+  rcor();//correction to the right
 
-  /*Serial.println(digitalRead(button));
+/*  Serial.println(digitalRead(button));
   if(digitalRead(button)==HIGH)
   {
     left.write(100);       
      right.write(0);
      delay(500);
   }
-  */
+  
   
   if(distance1<2)
   {
-    left.write(110);       
+     left.write(110);       
      right.write(0);
      delay(200);
-  }
+  }*/
   
 }
 
-void right()
+void Right()
 {
   //Turning right (around edge)
   if(c1>10 )              
-  { delay(700);         //avoid the edge
+  { delay(100);     
+    Serial.println("RIGHT");//avoid the edge
     right.write(180);           
     left.write(180);     //turn 90
-    delay(1000);
+    delay(1100);
     left.write(180);     //go straight 
     right.write(0);
-    delay(1500);
+    delay(1100);
   }
 }
 
