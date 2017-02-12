@@ -1,0 +1,4 @@
+Check for number of right turns.
+If 2 consicutive right turns are taken, then hard code for the edge of the wall.
+i.e. add delay to go a little in front and then turn right without any measurements.
+
