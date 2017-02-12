@@ -37,6 +37,34 @@ void loop() {
   right.write(0);
   c1=distance1-pd1;
   pd1=distance1;
+
+  right();  //Turning right (around edge)
+  
+  //Corrections.
+  lcor() //correction to the left
+ 
+  rcor()//correction to the right
+
+  /*Serial.println(digitalRead(button));
+  if(digitalRead(button)==HIGH)
+  {
+    left.write(100);       
+     right.write(0);
+     delay(500);
+  }
+  */
+  
+  if(distance1<2)
+  {
+    left.write(110);       
+     right.write(0);
+     delay(200);
+  }
+  
+}
+
+void right()
+{
   //Turning right (around edge)
   if(c1>10 )              
   { delay(700);         //avoid the edge
@@ -47,33 +75,27 @@ void loop() {
     right.write(0);
     delay(1500);
   }
+}
+
+void lcor()
+{
   //Corrections.
   if(c1==-1||c1==-2)   //correction to the left
   {  Serial.println("turning left");
      left.write(100);       
      right.write(0);
-     delay(500);}
-  if(c1>0&&c1<4)     //correction to the right
+     delay(500);
+   }
+}
+
+void rcor()
+{
+   if(c1>0&&c1<4)     //correction to the right
   {
    Serial.println("turning right");
   left.write(180);
   right.write(82);
   delay(500);
   }  
-
-  /*Serial.println(digitalRead(button));
-  if(digitalRead(button)==HIGH)
-  {
-    left.write(100);       
-     right.write(0);
-     delay(500);
-  }
-  */
-  if(distance1<2)
-  {
-    left.write(110);       
-     right.write(0);
-     delay(200);
-  }
-  
 }
+
