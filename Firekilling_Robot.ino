@@ -1,8 +1,8 @@
 #include<Servo.h>
 #include<NewPing.h>
 const int button=5;
-const int TP =12;
-const int EP =13;
+const int TP =6;
+const int EP =7;
 const int MD=200;
 const int TP1=3;
 const int EP1=2;
@@ -34,12 +34,14 @@ void loop() {
   delay(100);
   distance = sonar.ping_cm();
   distance1 = sonar1.ping_cm();
-  Serial.println(c1);   //Printing Change in Distance
+  //Serial.println(c1);   //Printing Change in Distance
   left.write(180);      //go straight in the beginning
   right.write(0);
   c1=distance1-pd1;
   pd1=distance1;
- 
+  //Serial.println(distance);
+  Serial.print("c: ");
+  Serial.println(distance);
 
   Right();  //Turning right (around edge)
   Left();
@@ -73,7 +75,7 @@ void Right()
   if(c1>10 )              
   { delay(600);         //avoid the edge
     
-    Serial.println("RIGHT");
+    //Serial.println("RIGHT");
     right.write(180);           
     left.write(180);     //turn 90
     delay(1000);
@@ -113,7 +115,7 @@ void lcor()
   
   //Corrections.
   if(c1==-1||c1==-2)   //correction to the left
-  {  Serial.println("turning left");
+  {  //Serial.println("turning left");
      left.write(100);       
      right.write(0);
      delay(500);
@@ -126,7 +128,7 @@ void rcor()
   
    if(c1>0&&c1<4)     //correction to the right
   {
-   Serial.println("turning right");
+   //Serial.println("turning right");
   left.write(180);
   right.write(82);
   delay(500);
