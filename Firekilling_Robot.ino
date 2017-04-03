@@ -11,7 +11,7 @@ const int TP2=8;
 const int EP2=4;
 const int MD2=200;
 int pd=0; 
-int pd1=0,pd2=0; 
+int pd1=30,pd2=0; 
 int c,c1,c2;
 int rno=0;
 int fan=13;
@@ -22,6 +22,7 @@ NewPing sonar2(TP2,EP2,MD2);
 Servo left;
 Servo right;
 int i=1;
+int flagg=0;
 
 void setup() {
 // put your setup code here, to run once:
@@ -29,6 +30,26 @@ Serial.begin(9600);
 left.attach(9);
 right.attach(10);
 digitalWrite(13,LOW); 
+left.write(180);
+right.write(120);         //rcorr
+delay(200);
+ 
+   
+left.write(90);
+right.write(90);
+delay(50);
+
+    //right.write(180);           
+    //left.write(180);     //turn 90 right
+    //delay(1000);
+    //left.write(180);      //go straight in the beginning
+    //right.write(0);
+    //delay(500);
+    //right.write(0);     //left
+    //left.write(0);
+    //delay(950);
+    
+
 }
 
 void loop() 
@@ -38,6 +59,10 @@ void loop()
   delay(100);
   distance = sonar.ping_cm();
   distance1 = sonar1.ping_cm();
+  if(flagg==1)
+  {
+    fire();
+  }
   //Serial.println(c1);   //Printing Change in Distance
   left.write(180);      //go straight in the beginning
   right.write(0);
@@ -50,11 +75,11 @@ void loop()
  //Serial.println(distance);
  //Serial.print("c: ");
  //Serial.println(distance);
- // Right();  //Turning right (around edge)
- // Left(); 
+ Left(); 
+ Right();  //Turning right (around edge)
  //  //Corrections.
- // lcor();//correction to the left
- // rcor();//correction to the right
+ lcor();//correction to the left
+ rcor();//correction to the right
  fire();
  //left.write(90);
  //right.write(90);  
@@ -64,18 +89,37 @@ void loop()
 }
 
 void Right()
-{
+{ Serial.print("right");
+  
   //Turning right (around edge)
   if(c1>10 )              
-  { delay(600);         //avoid the edge
+  { delay(700);         //avoid the edge
     
     //Serial.println("RIGHT");
     right.write(180);           
-    left.write(180);     //turn 90
-    delay(1000);
-    left.write(180);     //go straight 
+    left.write(180);     //turn 90 1
+    delay(950);
+    left.write(180);        //st
     right.write(0);
-    Right2();
+    delay(2300);
+    //second
+     right.write(180);           
+    left.write(180);     //turn 90
+    delay(950);
+    distance = sonar.ping_cm();
+  if(distance<7)
+  {
+    Left();
+  }
+    left.write(180);        //st
+    right.write(0);
+    delay(500);
+    distance = sonar.ping_cm();
+  if(distance<7)
+  {
+    Left();
+  }
+    
     /*rno++;
     if(rno==2)
     {
@@ -87,13 +131,13 @@ void Right()
       left.write(180);     //go straight 
       right.write(0);
     }*/
-    delay(1500);          //chk if needed
+    //delay(1500);          //chk if needed
   }
 }
 
 void Left()
 {
-  if( distance<10 && distance>0)
+  if( distance<13 && distance>0)
   {
     right.write(0);     //left
     left.write(0);
@@ -126,6 +170,8 @@ void rcor()
   delay(500);
   }
 }
+
+/*
 void Right2()
 { 
   int flag=0,temp=0,count=0;  
@@ -168,28 +214,53 @@ void Right2()
     }
   }   
 }
-
+*/
 
 void fire()
 {
+    flagg=1;
   //Serial.println();
   //Serial.print(digitalRead(2));
-  if(analogRead(2)>900)
+  
+  
+  if(analogRead(2)>950&&analogRead(1)>950&&analogRead(4)>950)
   {
-    while(true)
-    {
-      left.write(180);     //stop
+    left.write(89);
+    right.write(91);      //stop
+    digitalWrite(13,HIGH);
+    delay(2000);
+    
+  }
+  
+  
+  if(analogRead(2)>970)
+  {
+    
+
+   
+      left.write(180);     //front
     right.write(0);
-    delay(100);
+    delay(250);
       left.write(90);     //stop
     right.write(90);
     delay(100);
       digitalWrite(13,HIGH);              //FAN ON
-      delay(100000);
-    }
+      delay(2500);
+    digitalWrite(13,LOW);
+   
+    fire();
   }
   if(analogRead(5)>700||analogRead(4)>700)
   {
+    if(analogRead(2)>960)
+
+   {
+    digitalWrite(13,HIGH);              //FAN ON
+      delay(2500);
+    digitalWrite(13,LOW); 
+   }
+   else
+   {
   left.write(180);            //stright
   right.write(0);
   delay(300);
@@ -199,11 +270,22 @@ void fire()
   left.write(90);     //stop
     right.write(90);
     delay(100);
+   }
     fire();
-  fire();
+  
   }
   if(analogRead(0)>700||analogRead(1)>700)
-  {   
+  {
+
+    if(analogRead(2)>960)
+
+   {
+    digitalWrite(13,HIGH);              //FAN ON
+      delay(2500);
+    digitalWrite(13,LOW); 
+   }
+   else
+   {
     left.write(180);              //stright 
     right.write(0);
     delay(300);
@@ -215,6 +297,7 @@ void fire()
     left.write(90);     //stop
     right.write(90);
     delay(100);
+   }
     fire();
   }
   
