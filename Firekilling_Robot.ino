@@ -54,6 +54,7 @@ void loop()
 //  //Serial.print("c: ");
 //  //Serial.println(distance);
 
+   
   if(analogRead(5)>500||analogRead(4)>500)
   {
     fire();
@@ -74,8 +75,7 @@ void loop()
 
 
 
-  
-
+ 
 }
 
 void Right()
@@ -215,9 +215,9 @@ void fire()
   
    if((analogRead(1)>700||analogRead(2)>700)&&analogRead(5)<600)
   {
-    left.write(60);
-    right.write(60);            //left
-    delay(350);
+    left.write(0);
+    right.write(50);            //left
+    delay(300);
     left.write(180);
     right.write(0);
     delay(100);
