@@ -21,6 +21,7 @@ NewPing sonar1(TP1,EP1,MD1);
 NewPing sonar2(TP2,EP2,MD2);
 Servo left;
 Servo right;
+int count=0;
 
 
 void setup() {
@@ -47,25 +48,34 @@ void loop()
   {
     distance=sonar.ping_cm();
   }
-  
-  //Serial.println(distance);
-  //Serial.print("c: ");
-  //Serial.println(distance);
-//  
-  Right();  //Turning right (around edge)
+
+ digitalWrite(13,LOW);
+//  //Serial.println(distance);
+//  //Serial.print("c: ");
+//  //Serial.println(distance);
+
+  if(analogRead(5)>500||analogRead(4)>500)
+  {
+    fire();
+  }
+   if(analogRead(0)>500||analogRead(1)>500)
+  {
+    fire();
+  }
+ 
+ Right();  //Turning right (around edge)
   Left();
-//  
-//  //Corrections.
+ 
+ //Corrections.
   lcor();//correction to the left
  
-  rcor();//correction to the right
-  fire();
-  //left.write(90);
-  //right.write(90);
+ rcor();//correction to the right
+ // fire();
+
+
+
   
-//  Serial.println(analogRead(1));
-//  Serial.println(analogRead(2));
-//  Serial.println(analogRead(3));
+
 }
 
 void Right()
@@ -177,36 +187,100 @@ void Right2()
 
 void fire()
 {
+  /*
+  if(count==2)
+  {
+    count=0;
+    loop();
+  }
+  count++;
   //Serial.println();
-  //Serial.print(digitalRead(2));
-  //if(analogRead(2)>900)
+  //Serial.print(digitalRead(2));                                                     
+ */
   
+  if(analogRead(2)>900 && analogRead(1)>800 && analogRead(4)>800)
+  {
+    
+    digitalWrite(13,HIGH);
+  }
+   if((analogRead(5)>700||analogRead(4)>700)&&analogRead(0)<600)
+  {
+    left.write(150);
+    right.write(150);         //right
+    delay(350);
+    left.write(180);
+    right.write(0);
+    delay(100);
+  }
+  
+   if((analogRead(1)>700||analogRead(2)>700)&&analogRead(5)<600)
+  {
+    left.write(60);
+    right.write(60);            //left
+    delay(350);
+    left.write(180);
+    right.write(0);
+    delay(100);
+  }
+  
+fire();
+  
+  /*
   left.write(90);
   right.write(90);    //stop
+  Serial.print("start");
   digitalWrite(13,HIGH);
   left.write(90);
   right.write(100);      //turn right w right
+  Serial.print("1");
   delay(350);
+  
   left.write(110);
   right.write(90);      //turn right w left
+  Serial.print("2");
   delay(400);
+  
    left.write(90);        //stop
   right.write(90);    
-  delay(1000);
+  Serial.print("break");
+  delay(1500);
+  
   left.write(60);
   right.write(90);      //turn left w left
-  delay(400);
+  Serial.print("3");
+  delay(500);
+  
   left.write(90);
   right.write(25);      //turn left w right
-  delay(350);
+  Serial.print("4");
+  delay(400);
+  Serial.print("done");
    left.write(90);    //stop
   right.write(90);    
-  delay(1000);
+  delay(1500);
+  }
+  */
+   
+//  if(analogRead(5)>700||analogRead(4)>700)
+//  {
+//    left.write(110);
+//    right.write(100);
+//    delay(350);
+//    fire();
+//  }
+//
+//if(analogRead(0)>700||analogRead(1)>700)
+//  {
+//    
+//   left.write(60);
+//    right.write(50);
+//    delay(350);
+//    fire();
+//  }
+  }
   
   
-  
-  
-}  
+ 
   
 
 
@@ -214,4 +288,3 @@ void fire()
   
   
                                                                                                                                     
-
