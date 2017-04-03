@@ -197,7 +197,7 @@ void fire()
   //Serial.println();
   //Serial.print(digitalRead(2));                                                     
  */
-  
+  /*
   if(analogRead(2)>900 && analogRead(1)>800 && analogRead(4)>800)
   {
     
@@ -277,11 +277,31 @@ fire();
 //    delay(350);
 //    fire();
 //  }
+  }  
+  */
+
+   if(analogRead(5)>700||analogRead(4)>700)
+    {
+      left.write(110);
+      right.write(110);
+      delay(100);
+      left.write(180);
+      right.write(0);
+      delay(100);
+      
+    }
+  if(analogRead(2)<900&&analogRead(2)>500)
+  {
+    while(analogRead(2)>=950)
+    {
+      left.write(180);
+      right.write(0);
+      delay(100);
+    }
   }
   
-  
- 
-  
+    }
+  }
 
 
   
